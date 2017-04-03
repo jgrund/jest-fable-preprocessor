@@ -17,7 +17,7 @@ const {
 babelOpts.plugins = [
   babelPlugins.transformMacroExpressions,
   babelPlugins.removeUnneededNulls
-].concat(babelOpts.plugins);
+].concat(babelOpts.plugins || []);
 
 const THIS_FILE = fs.readFileSync(__filename);
 const BABEL_FILE = babelFile ? fs.readFileSync(babelFile) : '';
