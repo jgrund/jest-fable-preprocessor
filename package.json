@@ -1,0 +1,42 @@
+{
+  "name": "jest-fable-preprocessor",
+  "version": "0.0.0",
+  "description": "Transpiles Fable 1.0 code to JS for testing",
+  "main": "source/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jgrund/jest-fable-preprocessor.git"
+  },
+  "publishConfig": {
+    "registry": " https://registry.npmjs.org"
+  },
+  "keywords": [
+    "F#",
+    "Fable",
+    "Jest"
+  ],
+  "author": "Joe Grund",
+  "license": "MIT",
+  "bin": {
+    "sendProjFile": "source/send-proj-file.js"
+  },
+  "scripts": {
+    "eslint": "eslint ./"
+  },
+  "pre-commit": [
+    "eslint"
+  ],
+  "dependencies": {
+    "babel-core": "^6.24.0",
+    "fable-core": "^1.0.0-narumi-906",
+    "fable-loader": "^1.0.0-narumi-908",
+    "find-babel-config": "1.0.1"
+  },
+  "devDependencies": {
+    "pre-commit": "1.2.2",
+    "prettier": "0.22.0",
+    "eslint": "3.19.0",
+    "eslint-config-prettier": "1.5.0",
+    "eslint-plugin-prettier": "2.0.1"
+  }
+}
