@@ -2,10 +2,10 @@
 
 const send = require('./client.js');
 const parseOpts = require('./parse-opts.js');
-const { join } = require('path');
-
-const path = join(process.cwd(), '/test/Test.fsproj');
-const resp = send(parseOpts(path));
+const {
+  fable = { projLocation: './test/Test.fsproj' }
+} = require(`${process.cwd()}/package.json`);
+const resp = send(parseOpts(fable.projLocation));
 
 const {
   error = null
