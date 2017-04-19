@@ -4,7 +4,7 @@ const fs = require('fs');
 const babel = require('babel-core');
 const findBabelConfig = require('find-babel-config');
 const chalk = require('chalk');
-const babelPlugins = require('fable-loader/src/babel-plugins.js');
+const babelPlugins = require('fable-utils/babel-plugins');
 
 const send = require('./client.js');
 const parseOpts = require('./parse-opts.js');
@@ -15,8 +15,8 @@ const {
 } = findBabelConfig.sync('./');
 
 babelOpts.plugins = [
-  babelPlugins.transformMacroExpressions,
-  babelPlugins.removeUnneededNulls
+  babelPlugins.getRemoveUnneededNulls(),
+  babelPlugins.getTransformMacroExpressions(babel.template)
 ].concat(babelOpts.plugins || []);
 
 const THIS_FILE = fs.readFileSync(__filename);
