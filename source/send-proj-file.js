@@ -7,8 +7,6 @@ const {
 } = require(`${process.cwd()}/package.json`);
 const resp = send(parseOpts(fable.projLocation));
 
-const {
-  error = null
-} = JSON.parse(resp.stdout);
+const { error = null } = JSON.parse(resp.stdout);
 
 if (error) process.exit(1);

@@ -46,12 +46,7 @@ module.exports = {
 
     const data = JSON.parse(resp.stdout);
 
-    const {
-      error = null,
-      infos = [],
-      warnings = [],
-      fileName
-    } = data;
+    const { error = null, infos = [], warnings = [], fileName } = data;
 
     if (error) throw new Error(error);
 
