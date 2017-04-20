@@ -3,7 +3,9 @@ const { dirname } = require('path');
 module.exports = (
   path,
   {
-    port = 61225,
+    port = process.env.FABLE_SERVER_PORT
+      ? parseInt(process.env.FABLE_SERVER_PORT, 10)
+      : 61225,
     define = [],
     plugins = [],
     fableCoreVersion = require('fable-core/package.json').version,
