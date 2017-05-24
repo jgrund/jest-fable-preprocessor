@@ -11,7 +11,7 @@ if (require.main === module) {
   const c = new net.Socket();
   c.connect({ port }, () => c.write(msg));
 
-  c.on('data', x => buff += x);
+  c.on('data', x => (buff += x));
   // eslint-disable-next-line no-console
   c.on('close', () => console.log(buff));
 }

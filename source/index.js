@@ -5,6 +5,7 @@ const babel = require('babel-core');
 const findBabelConfig = require('find-babel-config');
 const chalk = require('chalk');
 const babelPlugins = require('fable-utils/babel-plugins');
+const istanbulPlugin = require('babel-plugin-istanbul').default;
 
 const send = require('./client.js');
 const parseOpts = require('./parse-opts.js');
@@ -38,7 +39,7 @@ module.exports = {
       .update(instrument ? 'instrument' : '')
       .digest('hex');
   },
-  process(src, path, config) {
+  process(src, path, config, transformOptions) {
     if (!path.endsWith('.fs') && !path.endsWith('.fsx')) return src;
 
     const { fable = {} } = require(`${config.rootDir}/package.json`);
@@ -53,17 +54,30 @@ module.exports = {
     infos.forEach(chalk.blue);
     warnings.forEach(chalk.yellow);
 
-    let fsCode = null;
+    const theseOptions = Object.assign(
+      {
+        filename: path,
+        sourceMaps: true,
+        sourceFileName: relative(process.cwd(), fileName.replace(/\\/g, '/'))
+      },
+      babelOpts
+    );
 
-    if (babelOpts.sourceMaps) {
-      fsCode = src;
-      babelOpts.sourceMaps = true;
-      babelOpts.sourceFileName = relative(
-        process.cwd(),
-        fileName.replace(/\\/g, '/')
-      );
+    if (transformOptions && transformOptions.instrument) {
+      theseOptions.auxiliaryCommentBefore = ' istanbul ignore next ';
+      // Copied from jest-runtime transform.js
+      theseOptions.plugins = theseOptions.plugins.concat([
+        [
+          istanbulPlugin,
+          {
+            // files outside `cwd` will not be instrumented
+            cwd: config.rootDir,
+            exclude: []
+          }
+        ]
+      ]);
     }
 
-    return babel.transformFromAst(data, fsCode, babelOpts).code;
+    return babel.transformFromAst(data, src, theseOptions).code;
   }
 };
