@@ -1,6 +1,6 @@
 {
   "name": "jest-fable-preprocessor",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Transpiles Fable 1.0 code to JS for testing",
   "main": "source/index.js",
   "repository": {
