@@ -6,6 +6,7 @@ const findBabelConfig = require('find-babel-config');
 const chalk = require('chalk');
 const babelPlugins = require('fable-utils/babel-plugins');
 const istanbulPlugin = require('babel-plugin-istanbul').default;
+const hoistPlugin = require('babel-plugin-jest-hoist');
 
 const send = require('./client.js');
 const parseOpts = require('./parse-opts.js');
@@ -17,7 +18,8 @@ const {
 
 babelOpts.plugins = [
   babelPlugins.getRemoveUnneededNulls(),
-  babelPlugins.getTransformMacroExpressions(babel.template)
+  babelPlugins.getTransformMacroExpressions(babel.template),
+  hoistPlugin
 ].concat(babelOpts.plugins || []);
 
 const THIS_FILE = fs.readFileSync(__filename);
@@ -48,6 +50,8 @@ module.exports = {
     const data = JSON.parse(resp.stdout);
 
     const { error = null, infos = [], warnings = [], fileName } = data;
+
+    chalk.red(error);
 
     if (error) throw new Error(error);
 
