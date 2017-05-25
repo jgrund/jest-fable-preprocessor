@@ -11,16 +11,26 @@ const hoistPlugin = require('babel-plugin-jest-hoist');
 const send = require('./client.js');
 const parseOpts = require('./parse-opts.js');
 
-const {
-  file: babelFile,
-  config: babelOpts = { plugins: [] }
-} = findBabelConfig.sync('./');
+const { file: babelFile, config } = findBabelConfig.sync('./');
+
+const babelOpts = Object.assign({ plugins: [], presets: [] }, config);
 
 babelOpts.plugins = [
   babelPlugins.getRemoveUnneededNulls(),
   babelPlugins.getTransformMacroExpressions(babel.template),
   hoistPlugin
-].concat(babelOpts.plugins || []);
+].concat(babelOpts.plugins);
+
+babelOpts.presets = [
+  [
+    'env',
+    {
+      targets: {
+        node: 'current'
+      }
+    }
+  ]
+].concat(babelOpts.presets);
 
 const THIS_FILE = fs.readFileSync(__filename);
 const BABEL_FILE = babelFile ? fs.readFileSync(babelFile) : '';
@@ -58,14 +68,11 @@ module.exports = {
     infos.forEach(chalk.blue);
     warnings.forEach(chalk.yellow);
 
-    const theseOptions = Object.assign(
-      {
-        filename: path,
-        sourceMaps: true,
-        sourceFileName: relative(process.cwd(), fileName.replace(/\\/g, '/'))
-      },
-      babelOpts
-    );
+    const theseOptions = Object.assign(babelOpts, {
+      filename: path,
+      sourceMaps: true,
+      sourceFileName: relative(process.cwd(), fileName.replace(/\\/g, '/'))
+    });
 
     if (transformOptions && transformOptions.instrument) {
       theseOptions.auxiliaryCommentBefore = ' istanbul ignore next ';
@@ -82,6 +89,6 @@ module.exports = {
       ]);
     }
 
-    return babel.transformFromAst(data, src, theseOptions).code;
+    return babel.transformFromAst(data, src, theseOptions);
   }
 };
