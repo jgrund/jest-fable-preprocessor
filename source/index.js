@@ -83,7 +83,7 @@ module.exports = {
           {
             // files outside `cwd` will not be instrumented
             cwd: config.rootDir,
-            exclude: []
+            exclude: ['**/packages/*', '*.test.fs']
           }
         ]
       ]);
