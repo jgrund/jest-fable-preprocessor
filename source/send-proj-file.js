@@ -3,7 +3,7 @@
 const send = require('./client.js');
 const parseOpts = require('./parse-opts.js');
 const {
-  fable = { projLocation: './test/Test.fsproj' }
+  fable = { projLocation: './Base.fsproj' }
 } = require(`${process.cwd()}/package.json`);
 const resp = send(parseOpts(fable.projLocation));
 

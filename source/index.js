@@ -3,7 +3,6 @@ const crypto = require('crypto');
 const fs = require('fs');
 const babel = require('babel-core');
 const findBabelConfig = require('find-babel-config');
-const chalk = require('chalk');
 const babelPlugins = require('fable-utils/babel-plugins');
 const istanbulPlugin = require('babel-plugin-istanbul').default;
 const hoistPlugin = require('babel-plugin-jest-hoist');
@@ -54,19 +53,25 @@ module.exports = {
   process(src, path, config, transformOptions) {
     if (!path.endsWith('.fs') && !path.endsWith('.fsx')) return src;
 
-    const { fable = {} } = require(`${config.rootDir}/package.json`);
+    const {
+      fable = { projLocation: './Base.fsproj' }
+    } = require(`${config.rootDir}/package.json`);
+
     const resp = send(parseOpts(path, fable));
 
     const data = JSON.parse(resp.stdout);
 
-    const { error = null, infos = [], warnings = [], fileName } = data;
+    const { fileName } = data;
+    const { error = [], infos = [], warnings = [] } = data.logs;
 
-    chalk.red(error);
+    // eslint-disable-next-line no-console
+    infos.forEach(x => console.log(x));
+    // eslint-disable-next-line no-console
+    warnings.forEach(x => console.log(x));
+    // eslint-disable-next-line no-console
+    error.forEach(x => console.log(x));
 
-    if (error) throw new Error(error);
-
-    infos.forEach(chalk.blue);
-    warnings.forEach(chalk.yellow);
+    if (error.length) throw new Error(error);
 
     const theseOptions = Object.assign(babelOpts, {
       filename: path,
