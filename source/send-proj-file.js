@@ -7,9 +7,11 @@ const {
 } = require(`${process.cwd()}/package.json`);
 const resp = send(parseOpts(fable.projLocation));
 
-const { logs = {} } = JSON.parse(resp.stdout);
+const parsedResp = JSON.parse(resp.stdout);
 
-// eslint-disable-next-line no-console
-if (logs.error) logs.error.forEach(x => console.error(x));
+if (parsedResp.logs.error) {
+  // eslint-disable-next-line no-console
+  parsedResp.logs.error.forEach(x => console.error(x));
 
-if (logs.error.length) process.exit(1);
+  process.exit(1);
+}
