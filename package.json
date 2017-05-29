@@ -33,7 +33,7 @@
     "find-babel-config": "1.1.0"
   },
   "devDependencies": {
-    "babel-plugin-istanbul": "4.1.3",
+    "babel-plugin-istanbul": "4.1.4",
     "babel-plugin-jest-hoist": "20.0.3",
     "eslint": "3.19.0",
     "eslint-config-prettier": "2.1.1",
