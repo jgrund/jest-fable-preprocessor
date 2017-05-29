@@ -1,5 +1,7 @@
 # jest-fable-preprocessor
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/jgrund/jest-fable-preprocessor.svg)](https://greenkeeper.io/)
+
 Transpiles [Fable](fable.io) to JS for Jest testing.
 
 Does so without the need for Webpack.
