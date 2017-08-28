@@ -15,7 +15,6 @@ At a minimum, your `package.json` should include these entries (version numbers 
 ```
 {
   "scripts": {
-    "prejest": "sendProjFile",
     "jest": "jest",
     "test": "dotnet fable npm-run jest"
   },
@@ -38,8 +37,6 @@ At a minimum, your `package.json` should include these entries (version numbers 
   },
   "devDependencies": {
     "babel-core": "6.24.0",
-    "fable-core": "1.0.0-narumi-906",
-    "fable-jest": "2.0.0",
     "jest": "19.0.2",
     "jest-fable-preprocessor": "1.0.0"
   }
@@ -50,24 +47,22 @@ You will also need a `Test.fsproj` file under a `test` directory.
 The `Test.fsproj` file should contain your tests and a link to the source. Example:
 
 ```
-<Project Sdk="FSharp.NET.Sdk;Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" />
-    <PackageReference Include="FSharp.Core" Version="4.1.*" />
-    <PackageReference Include="Fable.Core" Version="1.0.0-narumi-*" />
-    <ProjectReference Include="../Shell.fsproj" />
-    <ProjectReference Include="../node_modules/fable-jest/fable-jest.fsproj" />
+    <DotNetCliToolReference Include="dotnet-fable" Version="1.2.0-beta-003" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="../Shell.fsproj" />
     <Compile Include="unit/ShellTest.fs" />
     <Compile Include="integration/ShellTest.fs" />
   </ItemGroup>
+  <Import Project=".paket\Paket.Restore.targets" />
 </Project>
 ```
 
 ## Running
 
-```npm run test``` will send the fsproj file to the fable server. It will then parse your tests and run them. Webpack is not needed.
+```npm run test``` will parse your tests and run them.

@@ -54,10 +54,10 @@ module.exports = {
     if (!path.endsWith('.fs') && !path.endsWith('.fsx')) return src;
 
     const {
-      fable = { projLocation: './Base.fsproj' }
+      fableJest = { extra: { projectFile: './Base.fsproj' } }
     } = require(`${config.rootDir}/package.json`);
 
-    const resp = send(parseOpts(path, fable));
+    const resp = send(parseOpts(path, fableJest));
 
     const data = JSON.parse(resp.stdout);
 

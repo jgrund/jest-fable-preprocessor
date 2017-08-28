@@ -1,6 +1,6 @@
 {
   "name": "jest-fable-preprocessor",
-  "version": "1.2.6",
+  "version": "1.3.0",
   "description": "Transpiles Fable 1.0 code to JS for testing",
   "main": "source/index.js",
   "repository": {
@@ -10,11 +10,7 @@
   "publishConfig": {
     "registry": " https://registry.npmjs.org"
   },
-  "keywords": [
-    "F#",
-    "Fable",
-    "Jest"
-  ],
+  "keywords": ["F#", "Fable", "Jest"],
   "author": "Joe Grund",
   "license": "MIT",
   "bin": {
@@ -23,22 +19,20 @@
   "scripts": {
     "eslint": "eslint ./"
   },
-  "pre-commit": [
-    "eslint"
-  ],
+  "pre-commit": ["eslint"],
   "dependencies": {
-    "babel-core": "^6.24.0",
-    "babel-preset-env": "1.5.1",
-    "fable-utils": "1.0.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "fable-utils": "^1.0.1",
     "find-babel-config": "1.1.0"
   },
   "devDependencies": {
     "babel-plugin-istanbul": "4.1.4",
     "babel-plugin-jest-hoist": "20.0.3",
-    "eslint": "3.19.0",
-    "eslint-config-prettier": "2.1.1",
-    "eslint-plugin-prettier": "2.1.1",
+    "eslint": "^4.5.0",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-prettier": "^2.2.0",
     "pre-commit": "1.2.2",
-    "prettier": "1.3.1"
+    "prettier": "^1.6.0"
   }
 }
