@@ -17,19 +17,10 @@ const babelOpts = Object.assign({ plugins: [], presets: [] }, config);
 babelOpts.plugins = [
   babelPlugins.getRemoveUnneededNulls(),
   babelPlugins.getTransformMacroExpressions(babel.template),
-  hoistPlugin
+  hoistPlugin()
 ].concat(babelOpts.plugins);
 
-babelOpts.presets = [
-  [
-    'env',
-    {
-      targets: {
-        node: 'current'
-      }
-    }
-  ]
-].concat(babelOpts.presets);
+babelOpts.presets = [].concat(babelOpts.presets);
 
 const THIS_FILE = fs.readFileSync(__filename);
 const BABEL_FILE = babelFile ? fs.readFileSync(babelFile) : '';
@@ -73,7 +64,7 @@ module.exports = {
 
     if (error.length) throw new Error(error);
 
-    const theseOptions = Object.assign(babelOpts, {
+    const theseOptions = Object.assign({}, babelOpts, {
       filename: path,
       sourceMaps: true,
       sourceFileName: relative(process.cwd(), fileName.replace(/\\/g, '/'))
