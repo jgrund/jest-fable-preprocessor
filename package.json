@@ -23,12 +23,12 @@
   "dependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.0",
+    "babel-plugin-istanbul": "4.1.4",
+    "babel-plugin-jest-hoist": "20.0.3",
     "fable-utils": "^1.0.1",
     "find-babel-config": "1.1.0"
   },
   "devDependencies": {
-    "babel-plugin-istanbul": "4.1.4",
-    "babel-plugin-jest-hoist": "20.0.3",
     "eslint": "^4.5.0",
     "eslint-config-prettier": "^2.3.0",
     "eslint-plugin-prettier": "^2.2.0",
