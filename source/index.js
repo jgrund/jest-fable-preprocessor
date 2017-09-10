@@ -53,17 +53,20 @@ module.exports = {
 
     const data = JSON.parse(resp.stdout);
 
-    const { fileName } = data;
-    const { error = [], infos = [], warnings = [] } = data.logs;
+    const { fileName, error = null } = data;
+
+    if (error) throw new Error(error);
+
+    const { error: errors = [], infos = [], warnings = [] } = data.logs;
 
     // eslint-disable-next-line no-console
-    infos.forEach(x => console.log(x));
+    infos.forEach(console.log);
     // eslint-disable-next-line no-console
-    warnings.forEach(x => console.log(x));
+    warnings.forEach(console.error);
     // eslint-disable-next-line no-console
-    error.forEach(x => console.log(x));
+    errors.forEach(console.error);
 
-    if (error.length) throw new Error(error);
+    if (errors.length) throw new Error(errors);
 
     const theseOptions = Object.assign({}, babelOpts, {
       filename: path,
