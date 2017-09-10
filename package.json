@@ -10,7 +10,11 @@
   "publishConfig": {
     "registry": " https://registry.npmjs.org"
   },
-  "keywords": ["F#", "Fable", "Jest"],
+  "keywords": [
+    "F#",
+    "Fable",
+    "Jest"
+  ],
   "author": "Joe Grund",
   "license": "MIT",
   "bin": {
@@ -19,12 +23,15 @@
   "scripts": {
     "eslint": "eslint ./"
   },
-  "pre-commit": ["eslint"],
+  "pre-commit": [
+    "eslint"
+  ],
   "dependencies": {
     "babel-core": "^6.26.0",
+    "babel-jest": "^21.0.2",
     "babel-plugin-istanbul": "4.1.4",
     "babel-plugin-jest-hoist": "^21.0.2",
-    "fable-utils": "^1.0.4",
+    "fable-utils": "^1.0.6",
     "find-babel-config": "1.1.0"
   },
   "devDependencies": {

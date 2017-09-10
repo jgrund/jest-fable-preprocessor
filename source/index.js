@@ -4,6 +4,7 @@ const fs = require('fs');
 const babel = require('babel-core');
 const findBabelConfig = require('find-babel-config');
 const babelPlugins = require('fable-utils/babel-plugins');
+const fableUtils = require('fable-utils');
 const istanbulPlugin = require('babel-plugin-istanbul').default;
 const hoistPlugin = require('babel-plugin-jest-hoist');
 
@@ -12,7 +13,9 @@ const parseOpts = require('./parse-opts.js');
 
 const { file: babelFile, config } = findBabelConfig.sync('./');
 
-const babelOpts = Object.assign({ plugins: [], presets: [] }, config);
+const babelOpts = fableUtils.resolveBabelOptions(
+  Object.assign({ plugins: [], presets: [] }, config)
+);
 
 babelOpts.plugins = [
   babelPlugins.getRemoveUnneededNulls(),
@@ -24,6 +27,8 @@ babelOpts.presets = [].concat(babelOpts.presets);
 
 const THIS_FILE = fs.readFileSync(__filename);
 const BABEL_FILE = babelFile ? fs.readFileSync(babelFile) : '';
+
+fableUtils.validateFableOptions(babelOpts);
 
 module.exports = {
   canInstrument: true,
