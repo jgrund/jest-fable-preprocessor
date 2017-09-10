@@ -27,13 +27,14 @@ const BABEL_FILE = babelFile ? fs.readFileSync(babelFile) : '';
 
 module.exports = {
   canInstrument: true,
-  getCacheKey(fileData, filename, configString, { instrument }) {
+  getCacheKey(fileData, filename, configString, { instrument, rootDir }) {
     return crypto
       .createHash('md5')
       .update(THIS_FILE)
       .update('\0', 'utf8')
       .update(fileData)
       .update('\0', 'utf8')
+      .update(relative(rootDir, filename))
       .update(configString)
       .update('\0', 'utf8')
       .update(BABEL_FILE)
@@ -79,7 +80,7 @@ module.exports = {
           {
             // files outside `cwd` will not be instrumented
             cwd: config.rootDir,
-            exclude: ['**/packages/*', '*.test.fs']
+            exclude: ['**/packages/*', '*.test.fs', '*Test.fs']
           }
         ]
       ]);
