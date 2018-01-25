@@ -1,0 +1,12 @@
+{
+  "resetModules": true,
+  "clearMocks": true,
+  "testEnvironment": "node",
+  "moduleFileExtensions": ["js", "fs"],
+  "coveragePathIgnorePatterns": ["packages", ".+Test.fs"],
+  "testMatch": ["**/**/*Test.fs"],
+  "transform": {
+    "^.+\\.(fs)$": "jest-fable-preprocessor",
+    "^.+\\.js$": "jest-fable-preprocessor/source/babel-jest.js"
+  }
+}

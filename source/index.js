@@ -7,6 +7,7 @@ const babelPlugins = require('fable-utils/babel-plugins');
 const fableUtils = require('fable-utils');
 const istanbulPlugin = require('babel-plugin-istanbul').default;
 const hoistPlugin = require('babel-plugin-jest-hoist');
+const glob = require('glob');
 
 const send = require('./client.js');
 const parseOpts = require('./parse-opts.js');
@@ -50,9 +51,17 @@ module.exports = {
   process(src, path, config, transformOptions) {
     if (!path.endsWith('.fs') && !path.endsWith('.fsx')) return src;
 
-    const {
-      fableJest = { extra: { projectFile: './Base.fsproj' } }
-    } = require(`${config.rootDir}/package.json`);
+    const projectFile =
+      glob.sync(`${config.rootDir}/test/*.fsproj`)[0] ||
+      glob.sync(`${config.rootDir}/*.fsproj`)[0];
+
+    if (!projectFile) throw new Error('Could not find project file.');
+
+    const fableJest = {
+      extra: {
+        projectFile
+      }
+    };
 
     const resp = send(parseOpts(path, fableJest));
 

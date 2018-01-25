@@ -2,43 +2,24 @@
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/jgrund/jest-fable-preprocessor.svg)](https://greenkeeper.io/)
 
-Transpiles [Fable](fable.io) to JS for Jest testing.
-
-Does so without the need for Webpack.
-
-This approach is useful for Fable libraries, I.E. dependencies that are not the root node in a project tree.
+Compiles [Fable](fable.io) to JS on the fly for Jest testing.
 
 ## Setup
 
 At a minimum, your `package.json` should include these entries (version numbers not important):
 
-```
+```json
 {
   "scripts": {
-    "jest": "jest",
-    "test": "dotnet fable npm-run jest"
+    "test": "jest"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "fs",
-      "fsx"
-    ],
-    "transform": {
-      "^.+\\.(fs|fsx)$": "jest-fable-preprocessor",
-      "^.+\\.js$": "babel-jest"
-    },
-    "testMatch": [
-      "**/test/**/*.(fs|fsx)"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!fable.+)/"
-    ]
+    "preset": "jest-fable-preprocessor"
   },
   "devDependencies": {
-    "babel-core": "6.24.0",
-    "jest": "19.0.2",
-    "jest-fable-preprocessor": "1.0.0"
+    "babel-core": "6.26.0",
+    "jest": "22.1.4",
+    "jest-fable-preprocessor": "1.3.3"
   }
 }
 ```
@@ -46,23 +27,21 @@ At a minimum, your `package.json` should include these entries (version numbers 
 You will also need a `Test.fsproj` file under a `test` directory.
 The `Test.fsproj` file should contain your tests and a link to the source. Example:
 
-```
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-fable" Version="1.2.0-beta-003" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="../Shell.fsproj" />
     <Compile Include="unit/ShellTest.fs" />
     <Compile Include="integration/ShellTest.fs" />
   </ItemGroup>
-  <Import Project=".paket\Paket.Restore.targets" />
+  <Import Project="../paket/Paket.Restore.targets" />
 </Project>
 ```
 
 ## Running
 
-```npm run test``` will parse your tests and run them.
+`dotnet fable npm-test` will parse your tests and run them.
