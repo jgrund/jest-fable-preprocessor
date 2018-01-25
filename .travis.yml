@@ -8,4 +8,4 @@ deploy:
   api_key: "$NPM_TOKEN"
   on:
     tags: true
-    repo: jest-fable-preprocessor
+    repo: jgrund/jest-fable-preprocessor
