@@ -1,5 +1,6 @@
 # jest-fable-preprocessor
 
+[![Build Status](https://travis-ci.org/jgrund/jest-fable-preprocessor.svg?branch=master)](https://travis-ci.org/jgrund/jest-fable-preprocessor)
 [![Greenkeeper badge](https://badges.greenkeeper.io/jgrund/jest-fable-preprocessor.svg)](https://greenkeeper.io/)
 
 Compiles [Fable](fable.io) to JS on the fly for Jest testing.
